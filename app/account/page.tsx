@@ -73,7 +73,9 @@ export default function AccountPage() {
           </button>
         </form>
 
-        {!resetMode && mode === "login" && <button type="button" onClick={() => setResetMode(true)} style={{ marginTop: 14, padding: 0, border: 0, background: "transparent", color: "#16834b", fontWeight: 700, cursor: "pointer" }}>نسيت كلمة المرور؟</button>}\n        {resetMode && <button type="button" onClick={() => { setResetMode(false); setMessage(""); }} style={{ marginTop: 14, padding: 0, border: 0, background: "transparent", color: "#16834b", fontWeight: 700, cursor: "pointer" }}>العودة إلى تسجيل الدخول</button>}\n        {message && <p role="status" style={{ marginTop: 18, padding: 12, borderRadius: 10, background: "#edf7f0", lineHeight: 1.7, overflowWrap: "anywhere" }}>{message}</p>}
+        {!resetMode && mode === "login" && <button type="button" onClick={() => setResetMode(true)} style={{ marginTop: 14, padding: 0, border: 0, background: "transparent", color: "#16834b", fontWeight: 700, cursor: "pointer" }}>نسيت كلمة المرور؟</button>}
+        {resetMode && <button type="button" onClick={() => { setResetMode(false); setMessage(""); }} style={{ marginTop: 14, padding: 0, border: 0, background: "transparent", color: "#16834b", fontWeight: 700, cursor: "pointer" }}>العودة إلى تسجيل الدخول</button>}
+        {message && <p role="status" style={{ marginTop: 18, padding: 12, borderRadius: 10, background: "#edf7f0", lineHeight: 1.7, overflowWrap: "anywhere" }}>{message}</p>}
         <p style={{ marginTop: 18, color: "#718078", fontSize: 13, lineHeight: 1.7 }}>لا تشارك كلمة مرورك مع أي شخص. تأكيد البريد الإلكتروني مطلوب للحسابات الجديدة.</p>
       </section>
     </main>
