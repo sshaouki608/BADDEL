@@ -1,5 +1,5 @@
 -- BADDEL initial database schema
--- Run this script in Supabase SQL Editor.
+-- Run this script once in Supabase SQL Editor on a new project.
 -- RLS is enabled on every user-facing table. Never expose service_role keys.
 
 create extension if not exists pgcrypto;
@@ -190,12 +190,12 @@ create policy "Members view their conversations" on public.conversations
 for select using (
   exists (select 1 from public.conversation_members cm where cm.conversation_id = id and cm.user_id = auth.uid())
 );
-create policy "Users create conversations" on public.conversations
-for insert with check (auth.uid() is not null);
+-- No client-side INSERT policies for conversations or members yet.
+-- Membership must be created by a trusted server-side workflow after verifying
+-- the listing owner and the other participant. This prevents users joining
+-- conversations they do not belong to.
 create policy "Members view membership" on public.conversation_members
 for select using (user_id = auth.uid());
-create policy "Users join conversations they create" on public.conversation_members
-for insert with check (user_id = auth.uid());
 create policy "Members read messages" on public.messages
 for select using (
   exists (select 1 from public.conversation_members cm where cm.conversation_id = messages.conversation_id and cm.user_id = auth.uid())
@@ -205,8 +205,7 @@ for insert with check (
   sender_id = auth.uid()
   and exists (select 1 from public.conversation_members cm where cm.conversation_id = messages.conversation_id and cm.user_id = auth.uid())
 );
-create policy "Senders update own messages" on public.messages
-for update using (sender_id = auth.uid()) with check (sender_id = auth.uid());
+-- Message edits are disabled initially. Add a narrowly scoped RPC later if needed.
 
 -- Swap offers: proposer and listing owner can view; proposer creates and may withdraw.
 create policy "Offer parties view offers" on public.swap_offers
@@ -219,14 +218,8 @@ for insert with check (
   proposer_id = auth.uid()
   and exists (select 1 from public.listings l where l.id = listing_id and l.status = 'active' and l.seller_id <> auth.uid())
 );
-create policy "Offer parties update offers" on public.swap_offers
-for update using (
-  proposer_id = auth.uid()
-  or exists (select 1 from public.listings l where l.id = listing_id and l.seller_id = auth.uid())
-) with check (
-  proposer_id = auth.uid()
-  or exists (select 1 from public.listings l where l.id = listing_id and l.seller_id = auth.uid())
-);
+-- Offer status changes are disabled from direct client updates initially.
+-- We will add secure accept/reject/withdraw actions with validation later.
 
 -- Reports are private to their reporter; moderation will use a protected server/admin role.
 create policy "Users view own reports" on public.reports
