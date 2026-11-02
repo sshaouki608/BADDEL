@@ -15,8 +15,9 @@ export default function AdminPage() {
     setLoading(true);
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) { setAllowed(false); setLoading(false); return; }
-    const { data: profile } = await supabase.from("profiles").select("is_admin").eq("id", userData.user.id).single();
-    if (!profile?.is_admin) { setAllowed(false); setLoading(false); return; }
+    const { data: adminRecord, error: adminError } = await supabase
+      .from("admin_users").select("user_id").eq("user_id", userData.user.id).maybeSingle();
+    if (adminError || !adminRecord) { setAllowed(false); setLoading(false); return; }
     setAllowed(true);
     const { data, error } = await supabase.from("listings").select("id,title,description,price_dzd,wilaya,contact_phone,created_at,listing_type").eq("status", "pending_review").order("created_at", { ascending: true });
     if (error) setMessage(error.message);
@@ -24,7 +25,7 @@ export default function AdminPage() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { void load(); }, []);
 
   async function moderate(id: string, status: "active" | "rejected") {
     const { error } = await supabase.from("listings").update({ status }).eq("id", id);
