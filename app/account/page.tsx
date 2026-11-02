@@ -20,7 +20,7 @@ export default function AccountPage() {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { display_name: name.trim() || "مستخدم جديد" } },
+        options: { data: { display_name: name.trim() || "مستخدم جديد" }, emailRedirectTo: `${window.location.origin}/auth/callback` },
       });
       setMessage(
         error
