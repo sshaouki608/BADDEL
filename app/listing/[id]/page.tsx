@@ -9,6 +9,7 @@ type Listing = {
   price_dzd: number | null; wilaya: string; municipality: string | null;
   listing_type: string; item_condition: string; contact_phone: string | null; created_at: string;
 };
+type ListingImage = { id: string; image_url: string; sort_order: number };
 
 const typeLabels: Record<string, string> = { sale: "للبيع", exchange: "للتبادل", both: "للبيع أو التبادل" };
 const conditionLabels: Record<string, string> = { new: "جديد", like_new: "شبه جديد", good: "حالة جيدة", acceptable: "حالة مقبولة" };
@@ -16,6 +17,7 @@ const conditionLabels: Record<string, string> = { new: "جديد", like_new: "ش
 export default function ListingDetailsPage() {
   const params = useParams<{ id: string }>();
   const [listing, setListing] = useState<Listing | null>(null);
+  const [images, setImages] = useState<ListingImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -26,7 +28,12 @@ export default function ListingDetailsPage() {
         .eq("id", params.id).eq("status", "active").maybeSingle();
       if (error) setError("تعذر تحميل الإعلان: " + error.message);
       else if (!data) setError("هذا الإعلان غير موجود أو لم يعد متاحًا.");
-      else setListing(data as Listing);
+      else {
+        setListing(data as Listing);
+        const { data: imageData } = await supabase.from("listing_images")
+          .select("id,image_url,sort_order").eq("listing_id", params.id).order("sort_order");
+        setImages((imageData || []) as ListingImage[]);
+      }
       setLoading(false);
     }
     if (params.id) loadListing();
@@ -38,6 +45,7 @@ export default function ListingDetailsPage() {
       {loading ? <p style={{padding:30}}>جارٍ تحميل تفاصيل الإعلان...</p> : error ? <p role="alert" style={{padding:20,color:"#a33",lineHeight:1.8}}>{error}</p> : listing && <>
         <span style={{display:"inline-block",marginTop:24,padding:"6px 12px",borderRadius:20,background:"#eaf6ee",color:"#16834b"}}>{typeLabels[listing.listing_type] || "إعلان"}</span>
         <h1 style={{fontSize:30,margin:"16px 0"}}>{listing.title}</h1>
+        {images.length > 0 && <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,margin:"20px 0"}}>{images.map(image=><img key={image.id} src={image.image_url} alt={listing.title} style={{width:"100%",height:220,objectFit:"cover",borderRadius:12,background:"#f0f4f1"}}/>)}</div>}
         <strong style={{fontSize:25,color:"#16834b"}}>{listing.price_dzd == null ? "السعر عند التواصل" : Number(listing.price_dzd).toLocaleString("ar-DZ") + " دج"}</strong>
         <hr style={{border:0,borderTop:"1px solid #e5eee8",margin:"24px 0"}}/>
         <h2>تفاصيل المنتج</h2>
