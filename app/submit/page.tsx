@@ -43,7 +43,9 @@ export default function SubmitListingPage() {
     event.preventDefault();
     setBusy(true);
     setMessage("");
-    const { data: listing, error } = await supabase.from("listings").insert({
+    const listingId = crypto.randomUUID();
+    const { error } = await supabase.from("listings").insert({
+      id: listingId,
       seller_id: null,
       category_id: categoryId ? Number(categoryId) : null,
       title: title.trim(),
@@ -54,9 +56,9 @@ export default function SubmitListingPage() {
       wilaya: wilaya.trim(),
       contact_phone: phone.trim(),
       status: "pending_review",
-    }).select("id").single();
+    });
 
-    if (error || !listing) {
+    if (error) {
       setBusy(false);
       setMessage("تعذر إرسال الإعلان: " + (error?.message || "لم يتم إنشاء الإعلان."));
       return;
@@ -66,7 +68,7 @@ export default function SubmitListingPage() {
     for (let index = 0; index < images.length; index++) {
       const file = images[index];
       const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-      const path = listing.id + "/" + crypto.randomUUID() + "." + extension;
+      const path = listingId + "/" + crypto.randomUUID() + "." + extension;
       const { error: uploadError } = await supabase.storage.from("listing-images").upload(path, file, {
         cacheControl: "3600", upsert: false, contentType: file.type,
       });
@@ -76,7 +78,7 @@ export default function SubmitListingPage() {
         return;
       }
       const { data: publicData } = supabase.storage.from("listing-images").getPublicUrl(path);
-      imageRows.push({ listing_id: listing.id, image_url: publicData.publicUrl, sort_order: index });
+      imageRows.push({ listing_id: listingId, image_url: publicData.publicUrl, sort_order: index });
     }
 
     if (imageRows.length) {
