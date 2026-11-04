@@ -25,7 +25,8 @@ const typeLabels: Record<string, string> = {
 };
 
 export default function Home() {
-  const [listings, setListings] = useState<Listing[]>([]);\n  const [categories, setCategories] = useState<Category[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [wilaya, setWilaya] = useState("");
@@ -36,6 +37,8 @@ export default function Home() {
   useEffect(() => {
     async function loadListings() {
       setLoading(true);
+      const { data: categoryRows } = await supabase.from("categories").select("id,name_ar,icon").eq("is_active", true).order("sort_order");
+      setCategories((categoryRows || []) as Category[]);
       const { data, error } = await supabase
         .from("listings")
         .select("id,title,description,price_dzd,wilaya,listing_type,category_id,created_at")
