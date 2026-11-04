@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase/client";
 
+type Category = { id: number; name_ar: string; icon: string | null };
+
 type Listing = {
   id: string;
   title: string;
@@ -15,16 +17,7 @@ type Listing = {
   image_url?: string | null;
 };
 
-const categories = [
-  { id: 1, name: "الهواتف والإلكترونيات", icon: "📱" },
-  { id: 2, name: "الأزياء والإكسسوارات", icon: "👕" },
-  { id: 3, name: "المنزل والأثاث", icon: "🛋️" },
-  { id: 4, name: "السيارات وقطع الغيار", icon: "🚗" },
-  { id: 5, name: "العقارات", icon: "🏠" },
-  { id: 6, name: "الألعاب والهوايات", icon: "🎮" },
-  { id: 7, name: "الرياضة", icon: "⚽" },
-  { id: 8, name: "خدمات متنوعة", icon: "🧰" },
-];
+
 const typeLabels: Record<string, string> = {
   sale: "للبيع",
   exchange: "للتبادل",
@@ -32,7 +25,7 @@ const typeLabels: Record<string, string> = {
 };
 
 export default function Home() {
-  const [listings, setListings] = useState<Listing[]>([]);
+  const [listings, setListings] = useState<Listing[]>([]);\n  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [wilaya, setWilaya] = useState("");
@@ -126,7 +119,7 @@ export default function Home() {
     <section className="wrap stats"><div><b>كل الجزائر</b><span>منصة وطنية</span></div><div><b>بيع وشراء</b><span>إعلانات متنوعة</span></div><div><b>تبادل</b><span>فرص جديدة</span></div><div><b>بسهولة</b><span>تصفح واكتشف</span></div></section>
 
     <section className="wrap section" id="categories"><div className="section-head"><div><span className="eyebrow">اكتشف ما يناسبك</span><h2>تصفح حسب التصنيف</h2></div><a href="#listings">كل التصنيفات ←</a></div>
-      <div className="categories">{categories.map((item) => <button type="button" className={category === String(item.id) ? "category category-selected" : "category"} onClick={() => { setCategory(category === String(item.id) ? "" : String(item.id)); document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" }); }} key={item.id}><span>{item.icon}</span><b>{item.name}</b><small>اضغط لعرض الإعلانات</small></button>)}</div>
+      <div className="categories">{categories.map((item) => <button type="button" className={category === String(item.id) ? "category category-selected" : "category"} onClick={() => { setCategory(category === String(item.id) ? "" : String(item.id)); document.getElementById("listings")?.scrollIntoView({ behavior: "smooth" }); }} key={item.id}><span>{item.icon || "📦"}</span><b>{item.name_ar}</b><small>اضغط لعرض الإعلانات</small></button>)}</div>
     </section>
 
     <section className="section pale" id="listings"><div className="wrap">
@@ -134,7 +127,7 @@ export default function Home() {
       <div className="listing-filters">
         <label className="filter-search">بحث<input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="اسم المنتج أو وصفه..." /></label>
         <label>الولاية<select value={wilaya} onChange={(event) => setWilaya(event.target.value)}><option value="">كل الولايات</option>{wilayas.map((name) => <option key={name} value={name}>{name}</option>)}</select></label>
-        <label>التصنيف<select value={category} onChange={(event) => setCategory(event.target.value)}><option value="">كل التصنيفات</option>{categories.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+        <label>التصنيف<select value={category} onChange={(event) => setCategory(event.target.value)}><option value="">كل التصنيفات</option>{categories.map((item) => <option key={item.id} value={item.id}>{item.name_ar}</option>)}</select></label>
         <label>نوع الإعلان<select value={type} onChange={(event) => setType(event.target.value)}><option value="">الكل</option><option value="sale">للبيع</option><option value="exchange">للتبادل</option></select></label>
         <label>الترتيب<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="newest">الأحدث أولًا</option><option value="price-low">السعر: الأقل</option><option value="price-high">السعر: الأعلى</option></select></label>
         <button type="button" className="filter-reset" onClick={resetFilters}>إعادة ضبط</button>
