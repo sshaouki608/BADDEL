@@ -33,6 +33,21 @@ export default function Home() {
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
   const [sort, setSort] = useState("newest");
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("baddel-theme");
+    const enabled = savedTheme === "dark";
+    setDarkMode(enabled);
+    document.documentElement.dataset.theme = enabled ? "dark" : "light";
+  }, []);
+
+  function toggleTheme() {
+    const next = !darkMode;
+    setDarkMode(next);
+    document.documentElement.dataset.theme = next ? "dark" : "light";
+    localStorage.setItem("baddel-theme", next ? "dark" : "light");
+  }
 
   useEffect(() => {
     async function loadListings() {
@@ -102,7 +117,7 @@ export default function Home() {
     <header className="wrap header">
       <a className="brand" href="/"><span className="brand-icon">ب</span><span>BADDEL<small>بدّلها… تلقى واش تحتاج</small></span></a>
       <nav><a href="#categories">التصنيفات</a><a href="#listings">الإعلانات</a><a href="#how">كيفاش تخدم؟</a><a href="https://wa.me/213667661934" target="_blank" rel="noopener noreferrer">تواصل معنا</a></nav>
-      <div className="head-actions"><a className="btn primary" href="/submit">＋ أضف إعلان</a></div>
+      <div className="head-actions"><button type="button" className="theme-toggle" onClick={toggleTheme} aria-label={darkMode ? "تفعيل الوضع الفاتح" : "تفعيل الوضع الداكن"} title={darkMode ? "الوضع الفاتح" : "الوضع الداكن"}>{darkMode ? "☀️" : "🌙"}<span>{darkMode ? "الوضع الفاتح" : "الوضع الداكن"}</span></button><a className="btn primary" href="/submit">＋ أضف إعلان</a></div>
     </header>
 
     <section className="hero"><div className="wrap hero-grid">
