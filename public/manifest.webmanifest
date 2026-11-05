@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "BADDEL | بدّل",
+  "short_name": "BADDEL",
+  "description": "منصتك الجزائرية للبيع والشراء والتبادل",
+  "lang": "ar-DZ",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f0",
+  "theme_color": "#087f5b",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
