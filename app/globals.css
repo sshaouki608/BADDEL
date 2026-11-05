@@ -47,3 +47,16 @@
 :root[data-theme="dark"] .listing-image label,:root[data-theme="dark"] .listing-image button{background:#26372f;color:#e5eee9}
 :root[data-theme="dark"] .theme-toggle{background:#202e27;border-color:#405249;color:#e5eee9}
 @media(max-width:480px){.theme-toggle{padding:9px;font-size:11px}.theme-toggle span{display:none}.head-actions{gap:6px}}
+
+
+/* App-wide theme switcher and dark surfaces */
+.global-theme-toggle{position:fixed;z-index:1000;left:18px;bottom:18px;display:flex;align-items:center;gap:8px;border:1px solid #d5e1d9;border-radius:999px;padding:11px 15px;background:#fffdf6;color:#18352b;box-shadow:0 8px 28px #0002;font:600 13px "IBM Plex Sans Arabic",sans-serif;cursor:pointer}
+.global-theme-toggle:hover{transform:translateY(-2px)}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="dark"] body{background:#111a16!important;color:#e5eee9}
+:root[data-theme="dark"] main{background:#111a16;color:#e5eee9}
+:root[data-theme="dark"] header,:root[data-theme="dark"] section,:root[data-theme="dark"] article,:root[data-theme="dark"] form,:root[data-theme="dark"] aside{border-color:#34443d}
+:root[data-theme="dark"] input,:root[data-theme="dark"] textarea,:root[data-theme="dark"] select{background:#202e27;color:#e5eee9;border-color:#405249}
+:root[data-theme="dark"] .global-theme-toggle{background:#202e27;color:#e5eee9;border-color:#405249}
+:root[data-theme="dark"] .card,:root[data-theme="dark"] .panel,:root[data-theme="dark"] .form-card,:root[data-theme="dark"] .listing-card{background:#202e27;color:#e5eee9;border-color:#34443d}
+@media(max-width:480px){.global-theme-toggle{left:12px;bottom:12px;padding:10px 12px}.global-theme-toggle span{display:none}}
