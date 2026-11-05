@@ -60,3 +60,20 @@
 :root[data-theme="dark"] .global-theme-toggle{background:#202e27;color:#e5eee9;border-color:#405249}
 :root[data-theme="dark"] .card,:root[data-theme="dark"] .panel,:root[data-theme="dark"] .form-card,:root[data-theme="dark"] .listing-card{background:#202e27;color:#e5eee9;border-color:#34443d}
 @media(max-width:480px){.global-theme-toggle{left:12px;bottom:12px;padding:10px 12px}.global-theme-toggle span{display:none}}
+
+
+/* Fresh accent polish for BADDEL */
+:root{--accent-coral:#f08a62;--accent-blue:#6c9fe8}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#fff0e8;color:#c65e39;padding:7px 12px;border-radius:999px}
+.eyebrow:before{content:"✦";font-size:12px}
+.hero h1 em{background:linear-gradient(90deg,#087f5b,#e07b52);-webkit-background-clip:text;background-clip:text;color:transparent}
+.search button,.btn.primary{background:linear-gradient(135deg,#087f5b,#0b9b70);box-shadow:0 7px 18px #087f5b22}
+.category:nth-child(4n+1)>span{color:#087f5b}
+.category:nth-child(4n+2)>span{color:#df8056}
+.category:nth-child(4n+3)>span{color:#668ed0}
+.category:nth-child(4n)>span{color:#9472c6}
+.section-head h2{position:relative}
+.section-head h2:after{content:"";display:block;width:42px;height:4px;margin-top:8px;border-radius:9px;background:linear-gradient(90deg,#087f5b,#f08a62)}
+:root[data-theme="dark"] .eyebrow{background:#3a2b25;color:#ffb18f}
+:root[data-theme="dark"] .hero h1 em{-webkit-text-fill-color:transparent}
+:root[data-theme="dark"] .section-head h2:after{background:linear-gradient(90deg,#20a879,#f08a62)}
