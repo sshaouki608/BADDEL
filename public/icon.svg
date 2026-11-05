@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="30" fill="#087f5b"/>
+  <circle cx="64" cy="64" r="49" fill="none" stroke="#f4d77a" stroke-width="5"/>
+  <path d="M37 65c0-13 10-23 23-23h8c13 0 23 10 23 23S81 88 68 88h-8" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+  <path d="M91 63c0 13-10 23-23 23h-8c-13 0-23-10-23-23s10-23 23-23h8" fill="none" stroke="#f4d77a" stroke-width="9" stroke-linecap="round"/>
+  <path d="M31 65l9-9v18zM97 63l-9-9v18z" fill="#fff"/>
+  <text x="64" y="112" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#fff">BADDEL</text>
+</svg>
