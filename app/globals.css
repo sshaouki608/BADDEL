@@ -26,3 +26,24 @@
 .empty-listings-icon{font-size:38px}.empty-listings h3{margin:8px 0}.empty-listings p{color:var(--muted);font-size:13px}
 @media(max-width:1000px){.listing-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.filter-search{grid-column:span 2}}
 @media(max-width:600px){.listing-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:11px}.filter-search{grid-column:span 2}.listing-filters label{font-size:11px}.listing-filters input,.listing-filters select{padding:10px 8px;font-size:12px}.filter-reset{padding:10px 8px}.listing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.listing-image{height:145px}}
+
+
+/* Persistent light/dark theme */
+.theme-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface,#fffdf6);color:var(--text,var(--dark));font:600 12px "IBM Plex Sans Arabic",sans-serif;cursor:pointer;white-space:nowrap}
+.theme-toggle:hover{transform:translateY(-1px);box-shadow:0 6px 16px #14352d14}
+:root[data-theme="dark"]{--green:#20a879;--dark:#e5eee9;--muted:#a6b5ad;--line:#34443d;--cream:#17231e;--surface:#202e27; color-scheme:dark}
+:root[data-theme="dark"] body,:root[data-theme="dark"] .header{background:#111a16;color:#e5eee9}
+:root[data-theme="dark"] .topline,:root[data-theme="dark"] footer{background:#09110e}
+:root[data-theme="dark"] .hero{background:linear-gradient(115deg,#172a21 0%,#20271f 100%)}
+:root[data-theme="dark"] .pale{background:#17211c}
+:root[data-theme="dark"] .search,:root[data-theme="dark"] .category,:root[data-theme="dark"] .listing,:root[data-theme="dark"] .float-card,:root[data-theme="dark"] .steps>div,:root[data-theme="dark"] .listing-filters,:root[data-theme="dark"] .empty-listings{background:#202e27;border-color:#34443d;color:#e5eee9}
+:root[data-theme="dark"] .search input,:root[data-theme="dark"] .listing-filters input,:root[data-theme="dark"] .listing-filters select{background:#17231e;color:#e5eee9;border-color:#405249}
+:root[data-theme="dark"] nav,:root[data-theme="dark"] .hero-copy>p,:root[data-theme="dark"] .listing-description,:root[data-theme="dark"] .location{color:#a6b5ad}
+:root[data-theme="dark"] .stats,:root[data-theme="dark"] .stats div{border-color:#34443d}
+:root[data-theme="dark"] .art-circle{background:#254738}
+:root[data-theme="dark"] .art-sticker{background:#705e2c;color:#fff1c4}
+:root[data-theme="dark"] .btn.light,:root[data-theme="dark"] .filter-reset{background:#30473b;color:#e5eee9}
+:root[data-theme="dark"] .category-selected{background:#244638;border-color:#20a879}
+:root[data-theme="dark"] .listing-image label,:root[data-theme="dark"] .listing-image button{background:#26372f;color:#e5eee9}
+:root[data-theme="dark"] .theme-toggle{background:#202e27;border-color:#405249;color:#e5eee9}
+@media(max-width:480px){.theme-toggle{padding:9px;font-size:11px}.theme-toggle span{display:none}.head-actions{gap:6px}}
